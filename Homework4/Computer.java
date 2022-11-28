@@ -14,10 +14,6 @@ public class Computer {
         this.operationSystem = operationSystem;
     }
 
-    void printPrice() {
-        System.out.println(price);
-    }
-
     public int comparePrice(Computer compare) {
 
             if (this.price == compare.price){
