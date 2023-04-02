@@ -8,11 +8,22 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 
+
 public class StepDefinition {
 
   WebDriver driver;
 
     @Given("user navigates to store page on desktop.")
+
+    /*
+    public void userNavigatesToStorePageDifferentViewports() {
+        userNavigatesToStorePageOnDesktop();
+        userNavigatesToStorePageOnMobile();
+        userNavigatesToStorePageOnDesktop();
+    }
+
+     */
+
     public void userNavigatesToStorePageOnDesktop() {
         //openBrowser();
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\user\\IdeaProjects\\JQAProjectMod3\\src\\test\\resources\\drivers\\chromedriver.exe");
@@ -43,6 +54,7 @@ public class StepDefinition {
     }
 
     @Given("user navigates to store page on tablet.")
+
     public void userNavigatesToStorePageOnTablet() {
         //openBrowser();
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\user\\IdeaProjects\\JQAProjectMod3\\src\\test\\resources\\drivers\\chromedriver.exe");
@@ -56,10 +68,11 @@ public class StepDefinition {
         driver.get("https://demoqa.com/books");
     }
 
+
     @When("user click on first product link.")
     public void userClickOnFirstProductLink() {
         StorePage storePage = PageFactory.initElements(driver, StorePage.class);
-        storePage.clickProductLink();
+        storePage.clickProductFirstLink();
     }
 
     @Then("user should be navigated to product detailed page.")
@@ -88,7 +101,9 @@ public class StepDefinition {
         storePage.explicitWaitStorePage();
         storePage.verifyStorePage();
 
+        //quitBrowser ();
         driver.quit();
+
     }
 
 }

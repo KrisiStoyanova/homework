@@ -16,10 +16,10 @@ public class StorePage {
     }
 
     //Method to perform click action
-    public void clickProductLink() {
-        WebElement productLink = driver.findElement(By.xpath("//*[@id=\"see-book-Git Pocket Guide\"]/a"));
+    public void clickProductFirstLink() {
+        WebElement productFirstLink = driver.findElement(By.xpath("//*[@id=\"see-book-Git Pocket Guide\"]/a"));
         JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", productLink);
+        executor.executeScript("arguments[0].click();", productFirstLink);
     }
 
     //Method for explicit wait for loading store page
