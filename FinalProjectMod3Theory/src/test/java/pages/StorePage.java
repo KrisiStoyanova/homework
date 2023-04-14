@@ -2,16 +2,10 @@ package pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import stepDefinitions.BaseClass;
 
 public class StorePage extends BaseClass {
-
-    @FindBy(xpath = "//*[@id=\"see-book-Git Pocket Guide\"]/a")
-    WebElement productLink;
 
     public void clickProductLink() {
         System.out.println("Click on product link.");
@@ -31,4 +25,5 @@ public class StorePage extends BaseClass {
         String expectedUrlStoragePage = "https://demoqa.com/books";
         Assert.assertEquals(expectedUrlStoragePage, actualUrlStorePage);
     }
+
 }

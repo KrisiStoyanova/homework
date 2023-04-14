@@ -11,32 +11,29 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import pages.ProductPage;
 import pages.StorePage;
-
 import java.util.concurrent.TimeUnit;
 
 public class BackButtonSteps extends BaseClass {
 
-    String driverPath = "C:\\Users\\user\\IdeaProjects\\FinalProjectMod3Theory\\src\\test\\resources\\drivers\\chromedriver.exe";
-
     @Before
     public void setupBrowser() {
-        System.out.println("setup");
+        System.out.println("Open browser");
         System.setProperty("webdriver.chrome.driver", driverPath);
         driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1024, 768));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @Given("user navigates to store page.")
-    public void userNavigatesToStorePage() {
-        System.out.println("Open browser & 1st step");
+    @Given("^user navigates to store page on (.*) x (.*) viewport.")
+    public void userNavigatesToStorePageOnWidthAndHeightViewport(Integer width, Integer height) {
+        System.out.println("1st step: set window size & open url");
+        Dimension viewport = new Dimension(width, height);
+        driver.manage().window().setSize(viewport);
         driver.get("https://demoqa.com/books");
     }
 
     @When("user click on first product link.")
     public void userClickOnFirstProductLink() {
         System.out.println("2nd step");
-        //storePage = new StorePage();
         StorePage storePage = PageFactory.initElements(driver, StorePage.class);
         storePage.clickProductLink();
     }
@@ -45,7 +42,6 @@ public class BackButtonSteps extends BaseClass {
     public void userShouldBeNavigatedToProductDetailedPage() {
         System.out.println("3rd step");
         ProductPage productPage = PageFactory.initElements(driver, ProductPage.class);
-        //productPage = new ProductPage();
         productPage.explicitWaitProductPage();
         productPage.verifyProductPage();
     }
@@ -54,20 +50,20 @@ public class BackButtonSteps extends BaseClass {
     public void backButtonIsDisplayed() {
         System.out.println("4th step");
         ProductPage productPage = PageFactory.initElements(driver, ProductPage.class);
-        //productPage.explicitWaitBackButton();
+        productPage.explicitWaitBackButton();
         productPage.backButtonIsDisplayed();
     }
 
     @When("user click the back button.")
     public void userClickTheBackButton() {
-        System.out.println("6th step");
+        System.out.println("5th step & close browser");
         ProductPage productPage = PageFactory.initElements(driver, ProductPage.class);
         productPage.clickBackButton();
     }
 
     @Then("user should be navigated back to store page.")
     public void userShouldBeNavigatedBackToStorePage() {
-        System.out.println("7th step & close browser");
+        System.out.println("6th step & close browser");
         StorePage storePage = PageFactory.initElements(driver, StorePage.class);
         storePage.explicitWaitStorePage();
         storePage.verifyStorePage();
@@ -75,8 +71,9 @@ public class BackButtonSteps extends BaseClass {
 
     @After
     public void closeBrowser() {
-        System.out.println("close");
+        System.out.println("Close browser");
         driver.close();
     }
+
 
 }

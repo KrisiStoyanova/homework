@@ -2,16 +2,10 @@ package pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import stepDefinitions.BaseClass;
 
 public class ProductPage extends BaseClass {
-
-    @FindBy(xpath = "//*[@id=\"addNewRecordButton\"]")
-    WebElement backButton;
 
     public void explicitWaitProductPage() {
         System.out.println("Explicit wait for loading product page.");
@@ -26,11 +20,11 @@ public class ProductPage extends BaseClass {
         Assert.assertEquals(expectedUrlProductPage, actualUrlProductPage);
     }
 
-    //public void explicitWaitBackButton() {
-        //System.out.println("Explicit wait for back button.");
-        //WebDriverWait waitBackButton = new WebDriverWait(driver, 10);
-        //waitBackButton.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated(backButton);
-    //}
+    public void explicitWaitBackButton() {
+        System.out.println("Explicit wait for back button.");
+        WebDriverWait waitBackButton = new WebDriverWait(driver, 10);
+        waitBackButton.until(org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf(backButton));
+    }
 
     public void backButtonIsDisplayed() {
         System.out.println("Back button is displayed.");
