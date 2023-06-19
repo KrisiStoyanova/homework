@@ -1,6 +1,9 @@
 package tests;
 
 import api.Registration;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import helpers.JsonParser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -17,7 +20,7 @@ public class RegistrationTests {
     @BeforeTest
     public static void credentials() {
         name = "Tester";
-        email = "righteoufs.ireoluwa@fullangle.org";
+        email = "righteoufs.ireoluwa1@fullangle.org";
         password = "paasss";
     }
 

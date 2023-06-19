@@ -16,7 +16,7 @@ public class Registration {
     private static String registrationUrl = "http://restapi.adequateshop.com/api/authaccount/registration";
     private static String responseCodeRegistration;
     private static String responseBodyRegistration;
-    private static String accessTokenRegistration;
+    private static String accessToken;
     private static String registrationMessage;
 
 
@@ -59,19 +59,20 @@ public class Registration {
             String registrationCode = json1.getResponseCode(responseBodyRegistration);
             registrationMessage = json1.getRegistrationMessage(responseBodyRegistration);
             if (registrationCode.equals("0")) {
-                accessTokenRegistration = json1.getAccessToken(responseBodyRegistration);
+                accessToken = json1.getAccessToken(responseBodyRegistration);
             }
         }
     }
 
 
-    //public static String getAccessTokenRegistration() {
-        //return accessTokenRegistration;
-    //}
+    public static String getAccessToken() {
+        return accessToken;
+    }
 
     public static String getResponseCodeRegistration() {
         return responseCodeRegistration;
     }
+
 
     //public static String getResponseBodyRegistration() {
         //return responseBodyRegistration;

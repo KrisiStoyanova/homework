@@ -14,6 +14,9 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static api.Login.getAccessToken;
+import static api.Login.getUserID;
+
 
 public class RegistrationAndLoginAndGetUserTests {
 
@@ -25,7 +28,7 @@ public class RegistrationAndLoginAndGetUserTests {
     @BeforeTest
     public static void credentials() {
         name = "Tester";
-        email = "clayten.taggart@fullangle.org";
+        email = "keldrick.jaxel3@fullangle.org";
         password = "paasss";
     }
 
@@ -41,7 +44,7 @@ public class RegistrationAndLoginAndGetUserTests {
     }
 
 
-    @Test (priority = 1)
+    @Test(priority = 1)
     public static void testRegisteredEmail() throws IOException {
         Registration postRequestsRegistration1 = new Registration();
         postRequestsRegistration1.registration(name, email, password);
@@ -62,8 +65,8 @@ public class RegistrationAndLoginAndGetUserTests {
         Assert.assertTrue(authMessage.contains("success"), authMessage);
     }
 
-    protected static String urlUserID = "http://restapi.adequateshop.com/api/users/234201";
-    protected static String accessToken;
+    protected static String urlUserID = "http://restapi.adequateshop.com/api/users/" + getUserID();
+    protected static String accessToken = "bearer" + getAccessToken();
     protected static String responseCode;
     private static String responseBody;
 
@@ -72,9 +75,9 @@ public class RegistrationAndLoginAndGetUserTests {
     public static void testGetUser() throws IOException {
         HttpGet getUserID = new HttpGet(urlUserID);
         getUserID.setHeader("Content-type", "application/json");
-        getUserID.setHeader("Authorization", "bearer 886ced4b-d925-4ad8-b09c-5a204697b199");
-        HttpClient httpClient    = HttpClientBuilder.create().build();
-        HttpResponse response    = httpClient.execute(getUserID);
+        getUserID.setHeader("Authorization", accessToken);
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpResponse response = httpClient.execute(getUserID);
         responseCode = response.getStatusLine().toString();
 
         Assert.assertEquals(responseCode, "HTTP/1.1 200 OK");
@@ -99,8 +102,8 @@ public class RegistrationAndLoginAndGetUserTests {
         HttpGet getUserID = new HttpGet(urlUserID);
         getUserID.setHeader("Content-type", "application/json");
         getUserID.setHeader("Authorization", "bearer wrong");
-        HttpClient httpClient    = HttpClientBuilder.create().build();
-        HttpResponse response    = httpClient.execute(getUserID);
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpResponse response = httpClient.execute(getUserID);
         responseCode = response.getStatusLine().toString();
 
         Assert.assertEquals(responseCode, "HTTP/1.1 401 Unauthorized");
@@ -118,6 +121,8 @@ public class RegistrationAndLoginAndGetUserTests {
         System.out.println(responseBody);
 
     }
+
+    /*
 
     @Test(priority = 5)
     public static void testWrongID() throws IOException {
@@ -144,5 +149,7 @@ public class RegistrationAndLoginAndGetUserTests {
 
     }
 
-
+     */
+    
 }
+

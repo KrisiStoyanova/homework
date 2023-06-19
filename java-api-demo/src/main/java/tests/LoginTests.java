@@ -4,20 +4,22 @@ import api.Login;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import java.io.IOException;
 
-import static api.Login.printAccessToken;
 
 public class LoginTests {
 
     private static String email;
     private static String password;
 
+    private static String accessToken;
+
+    private static String userID;
+
 
     @BeforeTest
     public static void credentials() {
-        email = "ropseleyde@gufum.com";
+        email = "righteoufs.ireoluwa1@fullangle.org";
         password = "paasss";
     }
 
@@ -30,7 +32,8 @@ public class LoginTests {
         Assert.assertTrue(responseCode.contains("200"), responseCode);
         String authMessage = postRequests.getLoginMessage();
         Assert.assertTrue(authMessage.contains("success"), authMessage);
-
+        accessToken = postRequests.getAccessToken();
+        userID = postRequests.getUserID();
     }
 
 

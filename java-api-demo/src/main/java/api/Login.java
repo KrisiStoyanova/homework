@@ -60,6 +60,7 @@ public class Login {
             authMessage = json.getAuthMessage(responseBody);
             if (authCode.equals("0")) {
                 accessToken = json.getAccessToken(responseBody);
+                //userID = json.getUserID(responseBody);
             }
         }
 
@@ -73,6 +74,8 @@ public class Login {
                 userID = json.getUserID(responseBody);
             }
         }
+
+
     }
 
     public static String getAccessToken() {
@@ -90,6 +93,10 @@ public class Login {
 
     public static String getLoginMessage() {
         return authMessage;
+    }
+
+    public static String getUserID() {
+        return userID;
     }
 
     public static void printUserID() {
