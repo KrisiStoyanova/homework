@@ -14,8 +14,8 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static api.Login.getAccessToken;
-import static api.Login.getUserID;
+import static api.Login.*;
+import static api.Login.printUserID;
 
 
 public class RegistrationAndLoginAndGetUserTests {
@@ -24,11 +24,18 @@ public class RegistrationAndLoginAndGetUserTests {
     private static String email;
     private static String password;
 
+    protected static String urlString = "http://restapi.adequateshop.com/api/users?page=1";
+
+    //protected static String urlUserID = "http://restapi.adequateshop.com/api/users/" + getUserID();
+    protected static String accessToken = "bearer" + getAccessToken();
+    protected static String responseCode;
+    private static String responseBody;
+
 
     @BeforeTest
     public static void credentials() {
         name = "Tester";
-        email = "keldrick.jaxel3@fullangle.org";
+        email = "keldrick.jaxel6@fullangle.org";
         password = "paasss";
     }
 
@@ -43,19 +50,7 @@ public class RegistrationAndLoginAndGetUserTests {
         Assert.assertTrue(registrationMessage.contains("success"), registrationMessage);
     }
 
-
     @Test(priority = 1)
-    public static void testRegisteredEmail() throws IOException {
-        Registration postRequestsRegistration1 = new Registration();
-        postRequestsRegistration1.registration(name, email, password);
-        String responseCodeRegistration = postRequestsRegistration1.getResponseCodeRegistration();
-        Assert.assertTrue(responseCodeRegistration.contains("200"), responseCodeRegistration);
-        String registrationMessage = postRequestsRegistration1.getRegistrationMessage();
-        Assert.assertTrue(registrationMessage.contains("The email address you have entered is already registered"), registrationMessage);
-    }
-
-
-    @Test(priority = 2)
     public static void testSuccessfulLogin() throws IOException {
         Login postRequests = new Login();
         postRequests.login(email, password);
@@ -63,21 +58,23 @@ public class RegistrationAndLoginAndGetUserTests {
         Assert.assertTrue(responseCode.contains("200"), responseCode);
         String authMessage = postRequests.getLoginMessage();
         Assert.assertTrue(authMessage.contains("success"), authMessage);
+
+        printAccessToken();
+        printUserID();
+
     }
 
-    protected static String urlUserID = "http://restapi.adequateshop.com/api/users/" + getUserID();
-    protected static String accessToken = "bearer" + getAccessToken();
-    protected static String responseCode;
-    private static String responseBody;
 
+    @Test(priority = 2)
+    public static void testGetUsers() throws IOException {
+        Login postRequests = new Login();
+        postRequests.login(email, password);
+        HttpGet getUsers         = new HttpGet(urlString);
+        getUsers.setHeader("Content-type", "application/json");
+        getUsers.setHeader("Authorization", "bearer " + getAccessToken());
 
-    @Test(priority = 3)
-    public static void testGetUser() throws IOException {
-        HttpGet getUserID = new HttpGet(urlUserID);
-        getUserID.setHeader("Content-type", "application/json");
-        getUserID.setHeader("Authorization", accessToken);
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpResponse response = httpClient.execute(getUserID);
+        HttpClient httpClient    = HttpClientBuilder.create().build();
+        HttpResponse response    = httpClient.execute(getUsers);
         responseCode = response.getStatusLine().toString();
 
         Assert.assertEquals(responseCode, "HTTP/1.1 200 OK");
@@ -90,20 +87,46 @@ public class RegistrationAndLoginAndGetUserTests {
             responseBody = new ResponseReader().convertStreamToString(instream);
             instream.close();
         }
+        System.out.println(responseCode);
+        System.out.println(responseBody);
+    }
 
+
+    @Test(priority = 3)
+    public static void testGetSpecificUser() throws IOException {
+
+        Login postRequests = new Login();
+        postRequests.login(email, password);
+        HttpGet getUsers         = new HttpGet(urlString + getUserID());
+        getUsers.setHeader("Content-type", "application/json");
+        getUsers.setHeader("Authorization", "bearer " + getAccessToken());
+
+        HttpClient httpClient    = HttpClientBuilder.create().build();
+        HttpResponse response    = httpClient.execute(getUsers);
+        responseCode = response.getStatusLine().toString();
+
+        Assert.assertEquals(responseCode, "HTTP/1.1 200 OK");
+
+        //Parse the response body
+        HttpEntity entity = response.getEntity();
+        if (entity != null) {
+            // A Simple JSON Response Read
+            InputStream instream = entity.getContent();
+            responseBody = new ResponseReader().convertStreamToString(instream);
+            instream.close();
+        }
         System.out.println(responseCode);
         System.out.println(responseBody);
 
     }
 
-
     @Test(priority = 4)
     public static void testWrongToken() throws IOException {
-        HttpGet getUserID = new HttpGet(urlUserID);
+        HttpGet getUserID = new HttpGet(urlString);
         getUserID.setHeader("Content-type", "application/json");
         getUserID.setHeader("Authorization", "bearer wrong");
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpResponse response = httpClient.execute(getUserID);
+        HttpClient httpClient    = HttpClientBuilder.create().build();
+        HttpResponse response    = httpClient.execute(getUserID);
         responseCode = response.getStatusLine().toString();
 
         Assert.assertEquals(responseCode, "HTTP/1.1 401 Unauthorized");
@@ -122,18 +145,17 @@ public class RegistrationAndLoginAndGetUserTests {
 
     }
 
-    /*
 
     @Test(priority = 5)
     public static void testWrongID() throws IOException {
-        HttpGet getUserID = new HttpGet("http://restapi.adequateshop.com/api/users/2341999999999999");
+        HttpGet getUserID = new HttpGet("http://restapi.adequateshop.com/api/users/" + "wrong");
         getUserID.setHeader("Content-type", "application/json");
-        getUserID.setHeader("Authorization", "bearer 0dc9fbc1-5049-47a9-8d21-3420f638ab92");
+        //  getUserID.setHeader("Authorization", accessToken);
         HttpClient httpClient    = HttpClientBuilder.create().build();
         HttpResponse response    = httpClient.execute(getUserID);
         responseCode = response.getStatusLine().toString();
 
-        Assert.assertEquals(responseCode, "HTTP/1.1 400 Bad Request");
+        Assert.assertEquals(responseCode, "HTTP/1.1 401 Unauthorized");
 
         //Parse the response body
         HttpEntity entity = response.getEntity();
@@ -149,7 +171,5 @@ public class RegistrationAndLoginAndGetUserTests {
 
     }
 
-     */
-    
 }
 

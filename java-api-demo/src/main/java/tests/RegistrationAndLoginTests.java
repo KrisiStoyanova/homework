@@ -17,7 +17,7 @@ public class RegistrationAndLoginTests {
     @BeforeTest
     public static void credentials() {
         name = "Tester";
-        email = "keldrick.jaxel1@fullangle.org";
+        email = "keldrick.jaxel2@fullangle.org";
         password = "paasss";
     }
 
