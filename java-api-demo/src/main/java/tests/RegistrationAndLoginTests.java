@@ -2,6 +2,7 @@ package tests;
 
 import api.Login;
 import api.Registration;
+import helpers.ReadConfig;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -16,9 +17,16 @@ public class RegistrationAndLoginTests {
 
     @BeforeTest
     public static void credentials() {
-        name = "Tester";
-        email = "keldrick.jaxel2@fullangle.org";
-        password = "paasss";
+        //name = "Tester";
+        //email = "keldrick.jaxel430070504@fullangle.org";
+        //password = "paasss";
+
+        ReadConfig configJson = new ReadConfig();
+        configJson.readJson();
+        //baseURL = configJson.getBaseUrl();
+        name = configJson.getName();
+        email = configJson.getEmail();
+        password = configJson.getPassword();
     }
 
 

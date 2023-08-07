@@ -2,6 +2,7 @@ package tests;
 
 import api.Login;
 import api.ResponseReader;
+import helpers.ReadConfig;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import static api.Login.*;
 
 
+
 public class LoginAndGetUserTests {
 
     private static String email;
@@ -27,13 +29,22 @@ public class LoginAndGetUserTests {
     protected static String responseCode;
     protected static String responseBody;
 
+    private static String accessToken;
+
+    private static String userID;
+
 
     @BeforeTest
     public static void credentials() {
-        email = "righteoufs.ireoluwa1@fullangle.org";
-        password = "paasss";
-    }
+        //email = "righteoufs.ireoluwa1@fullangle.org";
+        //password = "paasss";
 
+        ReadConfig configJson = new ReadConfig();
+        configJson.readJson();
+        email = configJson.getEmail();
+        password = configJson.getPassword();
+
+    }
 
 
     @Test(priority = 0)

@@ -1,10 +1,6 @@
 {
   "baseUrl": "http://restapi.adequateshop.com",
-  "username": "haruto.nekhi@fullangle.org",
-  "password": "paasss"
-
-  //"baseUrl": "http://restapi.adequateshop.com",
-  //"QA-env": "http://restapi.adequateshop.com/api",
-  //"username": "zdravko.zafirov+2@gmail.com",
-  //"password": "123456"
+  "username": "righteoufs.ireoluwa2@fullangle.org",
+  "password": "paasss",
+  "name": "Tester"
 }

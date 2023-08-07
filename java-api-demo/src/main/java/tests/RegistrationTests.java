@@ -4,6 +4,7 @@ import api.Registration;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import helpers.JsonParser;
+import helpers.ReadConfig;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -15,13 +16,21 @@ public class RegistrationTests {
     private static String name;
     private static String email;
     private static String password;
+    private static String baseURL;
 
 
     @BeforeTest
     public static void credentials() {
-        name = "Tester";
-        email = "righteoufs.ireoluwa2@fullangle.org";
-        password = "paasss";
+        //name = "Tester";
+        //email = "haruto.nekhi07080404@fullangle.org";
+        //password = "paasss";
+
+        ReadConfig configJson = new ReadConfig();
+        configJson.readJson();
+        baseURL = configJson.getBaseUrl() + "/api/authaccount/registration";
+        name = configJson.getName();
+        email = configJson.getEmail();
+        password = configJson.getPassword();
     }
 
 

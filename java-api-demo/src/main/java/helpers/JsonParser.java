@@ -56,6 +56,56 @@ public class JsonParser {
         return message;
     }
 
+    public static String getConfigBaseURL(String in) {
+        String[] json = in.split(",");
+        String data = json[0];
+        data = data.replace("{", "");
+        String[] key = data.split(":");
+        String value = key[1];
+        String message = value.replace("\"", "");
+        return message;
+    }
+
+    public static String getConfigApiURL(String in) {
+        String[] json = in.split(",");
+        String data = json[1];
+        //data = data.replace("}", "");
+        String[] key = data.split(":");
+        String value = key[1];
+        String message = value.replace("\"", "");
+        return message;
+    }
+
+    public static String getConfigName(String in) {
+        String[] json = in.split(",");
+        String data = json[3];
+        data = data.replace("}", "");
+        String[] key = data.split(":");
+        String value = key[1];
+        String message = value.replace("\"", "");
+        return message;
+    }
+
+    public static String getConfigEmail(String in) {
+        String[] json = in.split(",");
+        String data = json[1];
+        //data = data.replace("}", "");
+        String[] key = data.split(":");
+        String value = key[1];
+        String message = value.replace("\"", "");
+        return message;
+    }
+
+    public static String getConfigPass(String in) {
+        String[] json = in.split(",");
+        String data = json[2];
+        //data = data.replace("}", "");
+        String[] key = data.split(":");
+        String value = key[1];
+        String message = value.replace("\"", "");
+        return message;
+    }
+
 
 }
 

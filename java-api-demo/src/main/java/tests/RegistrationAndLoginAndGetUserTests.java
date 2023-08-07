@@ -3,6 +3,7 @@ package tests;
 import api.Login;
 import api.Registration;
 import api.ResponseReader;
+import helpers.ReadConfig;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -34,9 +35,16 @@ public class RegistrationAndLoginAndGetUserTests {
 
     @BeforeTest
     public static void credentials() {
-        name = "Tester";
-        email = "keldrick.jaxel6@fullangle.org";
-        password = "paasss";
+        //name = "Tester";
+        //email = "keldrick.jaxel7@fullangle.org";
+        //password = "paasss";
+
+        ReadConfig configJson = new ReadConfig();
+        configJson.readJson();
+        name = configJson.getName();
+        email = configJson.getEmail();
+        password = configJson.getPassword();
+
     }
 
 
